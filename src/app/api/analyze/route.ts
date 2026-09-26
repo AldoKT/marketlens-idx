@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { analyzeMarket } from "@/lib/analyze";
+import { createMarketReport } from "@/lib/report";
 
 const BASE_URL = "https://api.sectors.app/v2";
 
@@ -74,11 +76,15 @@ export async function GET(request: NextRequest) {
                 foreign_share: flowByDate.get(price.date)!.foreign_share,
             }))
             .sort((a, b) => a.date.localeCompare(b.date));
+        const analysis = analyzeMarket(records);
+        const report = createMarketReport(symbol, analysis);
 
         return NextResponse.json({
             symbol,
             as_of_date: records.at(-1)?.date ?? null,
             record_count: records.length,
+            analysis,
+            report,
             records,
         });
     } catch (error) {

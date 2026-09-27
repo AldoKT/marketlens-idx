@@ -5,6 +5,17 @@ export type MarketReport = {
     summary: string;
     evidence: string[];
     watchNext: string[];
+    supportingEvidence: string[];
+    contradictingEvidence: string[];
+    missingChecks: { news: "belum diperiksa"; corporateAction: "belum diperiksa"; fundamentals: "belum diperiksa"; sector: "belum diperiksa" };
+    signal: {
+        spot: string;
+        investigate: string[];
+        gauge: string;
+        narrative: string;
+        assess: string;
+        lookAhead: string[];
+    };
 };
 
 const numberId = new Intl.NumberFormat("id-ID", {
@@ -98,16 +109,44 @@ export function createMarketReport(
         );
     }
 
-    const headline =
-        price.state === "sideways" &&
-            foreignFlow.state === "buying_pattern"
-            ? `${symbol}: sideways dengan indikasi arus beli asing`
-            : `${symbol}: kondisi perlu ditinjau`;
+    const { investigation, volume, periods } = analysis;
+    const supportingEvidence: string[] = [];
+    const contradictingEvidence: string[] = [];
+    const describePeriod = (period: typeof periods.price) =>
+        `${period.startDate ?? "tidak tersedia"} sampai ${period.endDate ?? "tidak tersedia"} (${period.sessions} sesi)`;
+    const metric = (value: number | null) => value === null ? "tidak tersedia" : numberId.format(value);
+    const criterionDetails = {
+        sideways: `Harga ${describePeriod(periods.price)}: rentang Rp${metric(price.lowestClose)}–Rp${metric(price.highestClose)}, lebar ${metric(price.rangePercent)}%, perubahan awal-akhir ${metric(price.netChangePercent)}%.`,
+        lower_range: `Penutupan terakhir pada ${analysis.asOfDate ?? "tanggal tidak tersedia"}: posisi ${metric(price.positionPercent)}% dalam rentang ${describePeriod(periods.price)}.`,
+        foreign_buying: `Arus asing ${describePeriod(periods.foreignFlow)}: ${foreignFlow.buyDays} sesi net buy, ${foreignFlow.sellDays} sesi net sell, total bersih Rp${metric(foreignFlow.netFlowIdr)}.`,
+    };
+    const investigate = investigation.criteria.map(criterion => {
+        const detail = `${criterionDetails[criterion.id]} Aturan: ${criterion.rule}`;
+        if (criterion.met === true) supportingEvidence.push(detail);
+        if (criterion.met === false) contradictingEvidence.push(detail);
+        return `${criterion.met === null ? "Belum dapat dinilai" : criterion.met ? "Terpenuhi" : "Tidak terpenuhi"}: ${detail}`;
+    });
+    const volumeText = volume.state === "available"
+        ? `Rata-rata volume ${describePeriod(volume.recentPeriod)}: ${metric(volume.recentAverage)}; sebelumnya ${describePeriod(volume.previousPeriod)}: ${metric(volume.previousAverage)}. Rasio ${metric(volume.ratio)}; perubahan ${metric(volume.changePercent)}%${volume.previousAverage === 0 ? " (baseline nol; rasio dan persentase tidak terdefinisi)" : ""}.`
+        : `Volume belum cukup atau tidak valid untuk perbandingan 5 lawan 5 sesi: terakhir ${describePeriod(volume.recentPeriod)}, sebelumnya ${describePeriod(volume.previousPeriod)}.`;
+    const gauge = `${volumeText} Volume adalah konteks, bukan bukti otomatis akumulasi dan tidak dihitung sebagai kriteria kandidat.`;
+    evidence.push(...investigate, gauge);
+    const assess = `Status ${investigation.status}; ${investigation.criteriaMet}/${investigation.criteriaTotal} kriteria terpenuhi. Kandidat adalah pola untuk investigasi, bukan konfirmasi akumulasi, bukti manipulasi, atau probabilitas cuan.`;
+    const narrative = `${priceText} ${flowText} Berita, corporate action, fundamental, dan sektor belum diperiksa. Penyebab harga dan katalis belum dapat disimpulkan.`;
+    watchNext.push(
+        "Periksa berita, corporate action, fundamental, dan sektor sebelum menyusun penjelasan sebab harga.",
+        "Evaluasi ulang rentang 10 sesi, posisi harga, arus asing 5 sesi, dan konteks volume saat data sesi baru tersedia.",
+    );
+    const spot = `${symbol}: Sideways Accumulation Watch — ${investigation.status} (${investigation.criteriaMet}/3 kriteria).`;
 
     return {
-        headline,
-        summary: `${priceText} ${flowText}`,
+        headline: spot,
+        summary: `${narrative} ${assess}`,
         evidence,
         watchNext,
+        supportingEvidence,
+        contradictingEvidence,
+        missingChecks: { news: "belum diperiksa", corporateAction: "belum diperiksa", fundamentals: "belum diperiksa", sector: "belum diperiksa" },
+        signal: { spot, investigate, gauge, narrative, assess, lookAhead: [...watchNext] },
     };
 }

@@ -50,7 +50,7 @@ async function main() {
             await page.getByRole('button', { name: 'Analisis', exact: true }).click();
             await expect(page.locator('canvas').first()).toBeVisible();
             await page.screenshot({ path: path.join(screenshots, 'baseline-detail.png') });
-            await page.locator('#signal-report').screenshot({ path: path.join(screenshots, 'baseline-report.png') });
+            await page.locator('#marketlens-report').screenshot({ path: path.join(screenshots, 'baseline-report.png') });
             await page.locator('.observations').screenshot({ path: path.join(screenshots, 'baseline-observations.png') });
             assert.deepEqual(forbidden, []); assert.deepEqual(errors, []);
             console.log(`Baseline browser 100%, zero API requests: ${screenshots}`);
@@ -144,9 +144,9 @@ async function main() {
             console.log(`GEOMETRY detail ${width}x${height}: candle/volume bottom ${Math.round(canvas.y + canvas.height)}, criteria bottom ${Math.round(criteria.y + criteria.height)}`);
             assert.ok(canvas.y + canvas.height <= height && criteria.y + criteria.height <= height, 'Candle, volume and criteria fit viewport');
             await expect(page.locator('.observations')).not.toHaveAttribute('open', '');
-            await page.locator('#signal-report').screenshot({ path: path.join(artifacts, `revision2-report-${width}x${height}.png`) });
+            await page.locator('#marketlens-report').screenshot({ path: path.join(artifacts, `revision2-report-${width}x${height}.png`) });
             await expect(page.locator('.report-stage')).toHaveCount(6);
-            console.log(`REPORT ${width}x${height}: ${Math.round((await page.locator('#signal-report').boundingBox()).height)} px, archive initially closed`);
+            console.log(`REPORT ${width}x${height}: ${Math.round((await page.locator('#marketlens-report').boundingBox()).height)} px, archive initially closed`);
             await page.getByText('Metodologi dan seluruh pengamatan', { exact: true }).click();
             await expect(page.getByRole('heading', { name: 'Bukti bertentangan', exact: true })).toBeVisible();
             assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
@@ -182,7 +182,7 @@ async function main() {
         }
         await page.reload(); // Deep link and query strings must also serve HTML on refresh.
         await expect(page.getByRole('heading', { name: 'Analisis BBCA', exact: true })).toBeVisible();
-        await page.getByRole('link', { name: '← Beranda SIGNAL', exact: true }).click();
+        await page.getByRole('link', { name: '← Beranda MarketLens', exact: true }).click();
         await expect(page.getByRole('heading', { level: 1 })).toContainText('Pasar dalam konteks.');
         for (const width of [1920, 1280, 1024, 768]) {
             await page.setViewportSize({ width, height: 1000 });

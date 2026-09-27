@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SIGNAL — IDX Watchlist Intelligence",
-  description: "Investigasi harga harian dan arus asing untuk daftar saham yang dipantau.",
+  title: "MarketLens — Post-Market Stock Intelligence",
+  description: "Post-market intelligence untuk saham IDX melalui data harian dan investigasi berbasis aturan.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

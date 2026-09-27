@@ -1,4 +1,4 @@
-# Revisi kedua UI SIGNAL
+# Revisi kedua UI MarketLens
 
 Revisi ini menggantikan susunan visual pada `ui-redesign.md`, tanpa mengubah aturan investigasi, perhitungan indikator, report generator, API, cache, ranking, atau pemuatan manual.
 
@@ -6,7 +6,7 @@ Revisi ini menggantikan susunan visual pada `ui-redesign.md`, tanpa mengubah atu
 
 - Landing: tiga row perbandingan dengan label kolom bersama, ticker/status/jumlah kriteria, satu fakta pendukung, satu alasan belum terkonfirmasi, tanggal dan tautan detail. Semua bukti asli tetap tersedia melalui **Bukti lengkap**. Header IHSG dipadatkan agar plot menjadi elemen utama; readout muncul saat hover/fokus. Validasi baris dan bantuan dipindahkan ke metodologi/disclosure.
 - Detail: status dan kesimpulan singkat mendahului chart. OHLCV dan MA menjadi strip metrik, bukan paragraf. Panel kanan hanya berisi tiga kriteria, angka kunci dan satu alasan spesifik. Bukti rinci tersedia di bawah melalui tautan yang sekaligus membuka disclosure.
-- Laporan: satu ringkasan harga/flow dan enam tahap dalam row berurutan, bukan grid dengan ruang kosong besar. **Metodologi dan seluruh pengamatan** mempertahankan seluruh teks laporan asli, aturan dan bukti. Pengulangan teks yang persis sama hanya ditampilkan sekali dalam arsip. Regresi memeriksa keberadaan setiap teks asli.
+- Laporan: satu ringkasan harga/flow dan enam tahap MarketLens dalam row berurutan, bukan grid dengan ruang kosong besar. **Metodologi dan seluruh pengamatan** mempertahankan seluruh teks laporan asli, aturan dan bukti. Pengulangan teks yang persis sama hanya ditampilkan sekali dalam arsip. Regresi memeriksa keberadaan setiap teks asli.
 - Copy presentasi membedakan nama kriteria dari hasilnya: misalnya **Kriteria sideways belum terpenuhi**, bukan **Bertentangan: Harga sideways**. Penilaian tetap berasal dari respons analisis.
 
 ## File revisi ini

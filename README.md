@@ -1,12 +1,12 @@
-# SIGNAL — IDX Market Intelligence
+# MarketLens — Post-Market Stock Intelligence
 
-SIGNAL is a post-market research workspace for exploring daily IDX price action and foreign flow. It helps organize evidence around a **Sideways Accumulation Watch**; it does not establish that accumulation or manipulation occurred. The product direction comes from a hackathon team and may change as the team learns.
+MarketLens is an individual learning prototype for exploring post-market IDX price action and foreign flow. It helps me study market intelligence, the Sectors API, data processing, charting, and rule-based investigation. It organizes evidence around a **Sideways Accumulation Watch**; it does not establish that accumulation or manipulation occurred.
 
 ## What the MVP does
 
 - Loads daily IHSG closes and a small watch universe: **BBCA, BBRI, and TLKM**.
 - Ranks watch candidates by the number of investigation criteria met, then ticker A–Z for ties. This is an ordering for review, not a return forecast.
-- Provides a manually loaded ticker investigation with a daily candlestick chart, volume, MA5/MA20, supporting and opposing evidence, and a six-stage SIGNAL report.
+- Provides a manually loaded ticker investigation with a daily candlestick chart, volume, MA5/MA20, supporting and opposing evidence, and a six-stage MarketLens report.
 - Shows incomplete and failed sources separately; a failed symbol does not erase other successful results.
 
 ### Investigation criteria
@@ -33,9 +33,9 @@ A single manual landing smoke test was completed earlier in the project; this RE
 
 Offline previews and automated tests use local, **synthetic fixtures**. They are deliberately marked as synthetic in the preview UI and are not historical observations, even when a fixture uses a real IDX ticker label. Screenshots below come from that preview and show the fixture notice. Do not use fixture values as market information.
 
-| SIGNAL landing with synthetic fixture | BBCA detail with synthetic fixture |
+| MarketLens landing with synthetic fixture | BBCA detail with synthetic fixture |
 | --- | --- |
-| ![SIGNAL landing at 100% zoom. The preview banner identifies all displayed market values as synthetic fixtures.](docs/screenshots/revision2-landing-1366x768.png) | ![BBCA detail at 100% zoom. The preview banner identifies all displayed market values as synthetic fixtures.](docs/screenshots/revision2-detail-1366x768.png) |
+| ![MarketLens landing at 100% zoom. The preview banner identifies all displayed market values as synthetic fixtures.](docs/screenshots/revision2-landing-1366x768.png) | ![MarketLens BBCA detail at 100% zoom. The preview banner identifies all displayed market values as synthetic fixtures.](docs/screenshots/revision2-detail-1366x768.png) |
 
 ## Run locally
 
@@ -79,4 +79,4 @@ npm run lint
 - Status and ranking summarize rule checks. They do not prove accumulation, predict returns, estimate profit probability, or provide buy/sell instructions.
 - News, corporate actions, fundamentals, and sector context have not been checked. The app cannot infer them as causes of a price move.
 - Historical fixture data is synthetic. A live smoke test confirms only the specific sources and dates observed at that time.
-- This is an evolving hackathon project; the team may change the product direction.
+- This is an individual learning prototype; the scope may change as the implementation and data understanding develop.

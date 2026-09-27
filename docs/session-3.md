@@ -2,7 +2,7 @@
 
 ## Alur
 
-- `/` adalah landing SIGNAL: penjelasan produk, pencarian ticker, kondisi IHSG, daftar Kandidat untuk Dipantau, dan hasil universe lainnya.
+- `/` adalah landing MarketLens: penjelasan produk, pencarian ticker, kondisi IHSG, daftar Kandidat untuk Dipantau, dan hasil universe lainnya.
 - Halaman awal tidak mengambil data. Klik **Muat kondisi pasar** memanggil `POST /api/market` satu kali. Tombol dijaga dari klik ganda saat permintaan masih berlangsung. Tidak ada polling, fetch dalam effect, atau sumber Sectors yang dipanggil saat import/render/prefetch.
 - Pencarian empat huruf dinormalisasi ke uppercase lalu menuju `/analyze/[symbol]`. Detail tidak memuat data sampai tombol **Analisis** ditekan. Candle, volume, MA 5/20, laporan, bukti, dan watchNext Sesi 1–2 tetap tersedia.
 - Link internal memakai `prefetch={false}`. Halaman detail server hanya membaca Promise params dan memvalidasi ticker, tanpa membaca key atau mengambil data.
@@ -75,7 +75,7 @@ Kompilasi preview dan pemeriksaan HTTP lokal berhasil. Setelah perbaikan preview
 
 Shortlist sekarang mendahului konteks IHSG. Ketiga kartu beserta tanggal, status, jumlah kriteria, ringkasan dukungan/kontradiksi, dan tautan detail muat pada viewport desktop 1280×900 dengan zoom 100%. Angka/periode bukti lengkap tetap tersedia melalui disclosure setiap kartu. Grafik IHSG dibatasi lebarnya. Pada mobile 390×844 kartu disusun vertikal; bagian awal kartu pertama terlihat, selebihnya melalui scroll, terutama karena banner fixture dan kontrol preview tetap ditampilkan.
 
-Detail diawali status, jumlah kriteria, satu kalimat kesimpulan dan anchor ke chart/bukti/laporan. Seluruh evidence, counter-evidence, ringkasan asli dan enam bagian SIGNAL tersedia di bawah. Informasi request/kredit/cache dipindahkan ke disclosure metodologi. Tidak ada perubahan aturan, ranking, fetch, atau respons API.
+Detail diawali status, jumlah kriteria, satu kalimat kesimpulan dan anchor ke chart/bukti/laporan. Seluruh evidence, counter-evidence, ringkasan asli dan enam tahap MarketLens tersedia di bawah. Informasi request/kredit/cache dipindahkan ke disclosure metodologi. Tidak ada perubahan aturan, ranking, fetch, atau respons API.
 
 Chrome offline memeriksa pencarian ticker, link/deep link/reload, fokus anchor bukti, Home pada chart, tabel ber-caption/column header, canvas nyata, mobile tanpa overflow halaman, serta hasil parsial/error. Desktop memakai deviceScaleFactor 1 dan visualViewport.scale 1. Screenshot viewport: [landing desktop 100%](screenshots/session3-landing-desktop-100.png), [detail desktop 100%](screenshots/session3-detail-desktop-100.png), [landing mobile](screenshots/session3-landing-mobile.png), [detail mobile](screenshots/session3-detail-mobile.png). Semua data sintetis.
 

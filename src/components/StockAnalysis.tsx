@@ -2,7 +2,7 @@
 import { type FormEvent, useRef, useState } from "react";
 import Link from "next/link";
 import { PriceChart } from "@/components/PriceChart";
-import { SignalBrand, InvestigationStatus, criterionLabels } from "./Workspace";
+import { MarketLensBrand, InvestigationStatus, criterionLabels } from "./Workspace";
 import type { AnalysisResponse } from "@/lib/stock-analysis";
 import { criterionFact } from "./investigation-display";
 import { chartNumber } from "@/lib/chart-data";
@@ -55,7 +55,7 @@ export function StockAnalysis({ symbol, initialResult = null, loadAnalysis = fet
     }
     const watch = result?.analysis.investigation;
     return <main className="signal-workspace">
-        <header className="workspace-topbar detail-topbar"><SignalBrand /><nav aria-label="Navigasi utama"><Link href="/" prefetch={false}>← Beranda SIGNAL</Link><span className="topbar-context">Investigasi saham</span></nav></header>
+        <header className="workspace-topbar detail-topbar"><MarketLensBrand /><nav aria-label="Navigasi utama"><Link href="/" prefetch={false}>← Beranda MarketLens</Link><span className="topbar-context">Investigasi saham</span></nav></header>
         <div className="workspace-body">
             <div className="detail-heading"><div><h1>Analisis {symbol}</h1><p className="data-date">{result ? `Data hingga ${result.as_of_date ?? "tidak tersedia"}` : "Data belum dimuat otomatis. Tekan Analisis untuk memuat data."}</p></div>
                 <form onSubmit={handleSubmit} aria-busy={loading}><button type="submit" disabled={loading} className="primary-button">{loading ? "Menganalisis..." : "Analisis"}</button></form>
@@ -64,7 +64,7 @@ export function StockAnalysis({ symbol, initialResult = null, loadAnalysis = fet
             {error && <p role="alert" className="notice notice-error">{error}</p>}
             {!result && !loading && <section className="workspace-panel designed-empty" style={{ marginTop: 24 }}><span className="empty-symbol" aria-hidden="true">⌁</span><h2>Mulai investigasi {symbol}</h2><p>Gunakan tombol Analisis untuk melihat candle harian, konteks volume, arus asing, dan penilaian tiga kriteria.</p><span className="empty-note">Tanggal hasil mengikuti sesi terakhir yang tersedia.</span></section>}
             {result && watch && <>
-                <div className="analysis-summary"><div className="summary-status"><h2><span className="sr-only">Status </span><InvestigationStatus status={watch.status} /></h2><p><strong>{watch.criteriaMet}/{watch.criteriaTotal}</strong> <span className="metric-label">kriteria terpenuhi</span></p></div><p className="summary-conclusion">{conclusions[watch.status]}</p><nav aria-label="Bagian analisis" className="section-links"><a href="#price-chart">Lihat chart</a><a href="#evidence" onClick={() => { if (observations.current) observations.current.open = true; }}>Periksa bukti</a><a href="#signal-report">Laporan SIGNAL</a></nav></div>
+                <div className="analysis-summary"><div className="summary-status"><h2><span className="sr-only">Status </span><InvestigationStatus status={watch.status} /></h2><p><strong>{watch.criteriaMet}/{watch.criteriaTotal}</strong> <span className="metric-label">kriteria terpenuhi</span></p></div><p className="summary-conclusion">{conclusions[watch.status]}</p><nav aria-label="Bagian analisis" className="section-links"><a href="#price-chart">Lihat chart</a><a href="#evidence" onClick={() => { if (observations.current) observations.current.open = true; }}>Periksa bukti</a><a href="#marketlens-report">Laporan MarketLens</a></nav></div>
                 <div className="detail-grid">
                     <section id="price-chart" tabIndex={-1} className="workspace-panel stock-chart-panel"><PriceChart records={result.records} /></section>
                     <section aria-labelledby="criteria-title" className="workspace-panel evidence-panel">
@@ -73,7 +73,7 @@ export function StockAnalysis({ symbol, initialResult = null, loadAnalysis = fet
                         <a className="evidence-jump" href="#evidence" onClick={() => { if (observations.current) observations.current.open = true; }}>Periksa angka & aturan lengkap ↓</a>
                     </section>
                 </div>
-                <section id="signal-report" tabIndex={-1} className="workspace-panel signal-report"><h3>Laporan SIGNAL</h3><p className="report-intro">{reportSummary(result)}</p>
+                <section id="marketlens-report" tabIndex={-1} className="workspace-panel signal-report"><h3>Laporan MarketLens</h3><p className="report-intro">{reportSummary(result)}</p>
                     <dl className="report-stages">{reportStages(result).map(({ title, content }, i) => <div key={title} className="report-stage"><dt><span>{String(i + 1).padStart(2, "0")}</span>{title}</dt><dd>{Array.isArray(content) ? <ul>{content.map(item => <li key={item}>{item}</li>)}</ul> : content}</dd></div>)}</dl>
                 </section>
                 <section id="evidence" tabIndex={-1} className="observations-section"><details ref={observations} className="workspace-panel observations"><summary>Metodologi dan seluruh pengamatan</summary><div className="observations-content"><h3>{result.report.headline}</h3><p>{result.record_count} sesi berpasangan harga/flow. Aturan berikut berasal dari hasil analisis:</p><ul>{watch.criteria.map(item => <li key={item.id}>{criterionLabels[item.id]}: {item.rule}</li>)}</ul>

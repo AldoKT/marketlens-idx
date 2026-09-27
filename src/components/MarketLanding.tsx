@@ -5,7 +5,7 @@ import { MARKET_CONFIG, marketRequestBudget, marketCreditEstimate, normalizeTick
 import { isWatchCandidate, type MarketOverview, type StockOverview } from "@/lib/market-overview";
 import { chartNumber } from "@/lib/chart-data";
 import { IndexChart } from "./IndexChart";
-import { SignalBrand, InvestigationStatus } from "./Workspace";
+import { MarketLensBrand, InvestigationStatus } from "./Workspace";
 import { shortlistFacts } from "./investigation-display";
 
 async function fetchOverview(): Promise<MarketOverview> {
@@ -53,7 +53,7 @@ export function MarketLanding({ initialOverview = null, loadOverview = fetchOver
     const others = overview?.stocks.filter(stock => !isWatchCandidate(stock)) ?? [];
     const index = overview?.ihsg;
     return <main className="signal-workspace">
-        <header className="workspace-topbar"><SignalBrand /><span className="topbar-context">Gambaran pasar</span>
+        <header className="workspace-topbar"><MarketLensBrand /><span className="topbar-context">Gambaran pasar</span>
             <form onSubmit={search} className="ticker-search" aria-label="Pencarian analisis saham">
                 <label htmlFor="ticker">Ticker IDX</label><input id="ticker" value={ticker} onChange={event => setTicker(event.target.value)} maxLength={4} placeholder="Contoh: BBCA" autoComplete="off" aria-invalid={!!searchError} aria-describedby={searchError ? "ticker-error" : "ticker-help"} />
                 <button type="submit" className="secondary-button">Buka analisis <span aria-hidden="true">↗</span></button><span id="ticker-help" className="sr-only">Buka detail, lalu tekan Analisis untuk memuat data.</span>

@@ -88,7 +88,7 @@ async function main() {
     }
     assert.ok(detailHtml.includes('Metodologi dan seluruh pengamatan'));
     for (const label of ['Bukti mendukung', 'Bukti bertentangan', 'Spot', 'Investigate', 'Gauge', 'Narrative', 'Assess', 'Look Ahead']) assert.ok(detailHtml.includes(label));
-    for (const id of ['price-chart', 'evidence', 'signal-report']) assert.ok(detailHtml.includes(`href="#${id}"`) && detailHtml.includes(`id="${id}"`));
+    for (const id of ['price-chart', 'evidence', 'marketlens-report']) assert.ok(detailHtml.includes(`href="#${id}"`) && detailHtml.includes(`id="${id}"`));
     const firstDetail = renderToStaticMarkup(React.createElement(StockAnalysis, { symbol: 'BBCA', loadAnalysis: forbidden }));
     assert.ok(firstDetail.includes('Data belum dimuat otomatis'));
     // Test the server adapter with a fully local fetch mock, never native fetch.

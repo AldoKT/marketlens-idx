@@ -59,7 +59,7 @@ async function main() {
         console.log(JSON.stringify({ applicationStatus: response.status(), analysisClicks: 1, applicationRequests: apiCalls.length, sectorsWireRequests: events.filter(event => event.event === 'wire-request').length, sourceEvents: events }, null, 2));
         if (!response.ok()) throw new Error('BBCA application response failed; no second click or retry.');
         await expect(page.getByRole('heading', { name: `Status ${body.analysis.investigation.status}`, exact: true })).toBeVisible();
-        await expect(page.getByRole('heading', { name: 'Laporan SIGNAL', exact: true })).toBeVisible();
+        await expect(page.getByRole('heading', { name: 'Laporan MarketLens', exact: true })).toBeVisible();
         await expect(page.locator('canvas').first()).toBeVisible();
         const records = body.records;
         assert.equal(body.record_count, records.length);

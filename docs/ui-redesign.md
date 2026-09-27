@@ -1,4 +1,4 @@
-# SIGNAL workspace redesign
+# MarketLens workspace redesign
 
 Keempat referensi lokal dalam `docs/references/` diperiksa langsung sebagai gambar sebelum implementasi. Komposisi landing mengikuti hierarki mockup: IHSG di kiri, shortlist investigasi di kanan, dengan topbar pencarian. Referensi aplikasi pasar dipakai untuk skala chart dan pemisahan panel.
 
@@ -6,7 +6,7 @@ Keempat referensi lokal dalam `docs/references/` diperiksa langsung sebagai gamb
 
 - Desktop: workspace selebar layar, dibatasi 1920 px; IHSG dan shortlist berdampingan. Tidak ada sidebar atau navigasi dekoratif.
 - Laptop/mobile: panel turun menjadi satu kolom pada lebar 900 px. Pencarian mendapat baris penuh pada mobile. Tabel digulir di dalam panel; halaman tidak melebar horizontal.
-- Detail: header ticker/tanggal/status/jumlah kriteria, chart di kiri, tiga kriteria dan seluruh bukti mendukung/bertentangan terbuka di kanan. Laporan enam tahap SIGNAL dan seluruh pengamatan tetap tersedia di bawah.
+- Detail: header ticker/tanggal/status/jumlah kriteria, chart di kiri, tiga kriteria dan seluruh bukti mendukung/bertentangan terbuka di kanan. Laporan enam tahap MarketLens dan seluruh pengamatan tetap tersedia di bawah.
 - IHSG: SVG responsif dengan rentang Y dari data, grid dan label tanggal, readout pointer/keyboard, serta tabel. Tidak menampilkan OHLC atau periode intraday. Periode/sesi mengikuti respons.
 - Chart saham tetap memakai Lightweight Charts dengan candle, volume, MA5/20, ringkasan teks, date selector, dan tabel. Perubahan hanya ukuran/warna/penempatan; validasi OHLC dan perhitungan MA tetap di `chart-data.ts`.
 - Aturan investigasi, report generator, ranking, route API, bentuk respons, TTL cache, dan pemuatan manual tidak diubah. `Workspace.tsx` hanya menyatukan identitas visual dan label.
